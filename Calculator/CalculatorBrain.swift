@@ -33,11 +33,15 @@ class CalculatorBrain
     private var knownOps = [String:Op]()
     
     init() {
-        knownOps["*"] = Op.BinaryOperation("*", *)
-        knownOps["/"] = Op.BinaryOperation("/") { $1 / $0 }
-        knownOps["+"] = Op.BinaryOperation("+", +)
-        knownOps["-"] = Op.BinaryOperation("-") { $1 - $0 }
-        knownOps["sqrt"] = Op.UnaryOperation("sqrt", sqrt)
+        func learnOp(op: Op) {
+            knownOps[op.description] = op
+        }
+        
+        learnOp(Op.BinaryOperation("*", *))
+        learnOp(Op.BinaryOperation("/") { $1 / $0 })
+        learnOp(Op.BinaryOperation("+", +))
+        learnOp(Op.BinaryOperation("-") { $1 - $0 })
+        learnOp(Op.UnaryOperation("sqrt", sqrt))
     }
     
     private func evaluate(ops: [Op]) -> (result: Double?, remainingOps: [Op]) {
